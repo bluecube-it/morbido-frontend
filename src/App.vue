@@ -26,10 +26,10 @@
 
             <h6
               class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>Menu Header</span>
+              <span>Data Management</span>
               <a class="d-flex align-items-center text-muted" href="#"
                 aria-label="Add a new report">
-                <span data-feather="plus-circle"></span>
+                <plus-circle-icon />
               </a>
             </h6>
             <ul class="nav flex-column mb-2">
@@ -39,10 +39,16 @@
                   Upload Datasets
                 </router-link> 
               </li>
+              <li class="nav-item">
+                <router-link to="/time-series-forecast" class="nav-link">
+                  <trending-up-icon></trending-up-icon>
+                  Time Series Forecast
+                </router-link> 
+              </li>
             </ul>
           </div>
         </nav>
-
+        
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <transition name="fade" mode="out-in">
             <router-view/>
@@ -56,13 +62,17 @@
 <script>
   import {
     ActivityIcon,
-    UploadCloudIcon
+    UploadCloudIcon,
+    PlusCircleIcon,
+    TrendingUpIcon,
   } from 'vue-feather-icons';
 
   export default {
     components: {
       ActivityIcon,
-      UploadCloudIcon
+      UploadCloudIcon,
+      PlusCircleIcon,
+      TrendingUpIcon
     }
   }
 </script>
