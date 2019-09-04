@@ -33,11 +33,10 @@
               </a>
             </h6>
             <ul class="nav flex-column mb-2">
-              
               <li class="nav-item">
-                <router-link to="/about" class="nav-link">
-                  <calendar-icon></calendar-icon>
-                  Current month
+                <router-link to="/upload-datasets" class="nav-link">
+                  <upload-cloud-icon></upload-cloud-icon>
+                  Upload Datasets
                 </router-link> 
               </li>
             </ul>
@@ -57,13 +56,13 @@
 <script>
   import {
     ActivityIcon,
-    CalendarIcon
+    UploadCloudIcon
   } from 'vue-feather-icons';
 
   export default {
     components: {
       ActivityIcon,
-      CalendarIcon
+      UploadCloudIcon
     }
   }
 </script>
@@ -74,7 +73,7 @@
     text-decoration: none;
     background-color: transparent;
   }
-  
+
   .fade-enter-active,
   .fade-leave-active {
     transition-duration: 0.3s;
