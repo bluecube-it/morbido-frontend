@@ -16,14 +16,12 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
-              <router-link to="/dashboard">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <router-link to="/dashboard" class="nav-link">
                   <activity-icon></activity-icon>
                   Dashboard <span class="sr-only">(current)</span>
-                </a>
+                </router-link>
               </li>
-              </router-link>
             </ul>
 
             <h6
@@ -35,14 +33,13 @@
               </a>
             </h6>
             <ul class="nav flex-column mb-2">
-              <router-link to="/about">
+              
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <router-link to="/about" class="nav-link">
                   <calendar-icon></calendar-icon>
                   Current month
-                </a>
+                </router-link> 
               </li>
-              </router-link> 
             </ul>
           </div>
         </nav>
@@ -67,5 +64,12 @@
       CalendarIcon
     }
   }
-
 </script>
+
+<style scoped>
+  .router-link-active {
+    color: #007bff!important;
+    text-decoration: none;
+    background-color: transparent;
+  }
+</style>
