@@ -13,6 +13,7 @@
     "core-js": "^2.6.5",
     "feather-icons": "^4.24.1",
     "filepond": "^4.6.1",
+    "filepond-plugin-file-validate-type": "^1.2.4",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
