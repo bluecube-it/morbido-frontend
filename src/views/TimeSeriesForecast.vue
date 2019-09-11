@@ -19,7 +19,7 @@
               <label for="state">Dataset</label>
               <select class="custom-select d-block w-100" id="state" required="">
                 <option value="">Choose...</option>
-                <option>California</option>
+                <option v-for="dataset in datasets" v-bind:key="dataset.id" :value="dataset.id">{{ dataset.original_name }}</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -40,14 +40,12 @@
               </div>
             </div>
           </div>
-
           <hr class="mb-4">
-          <b-button variant="primary" block @click="makePrediction">
+          <b-button variant="dark" block @click="makePrediction">
             <b-spinner small v-if="isLoading"></b-spinner>
             <span v-if="!isLoading">Predict Time Series</span>
           </b-button>
         </form>
-
         <div class="mt-5">
           <line-chart :data="graph" height="500px" :dataset="{borderWidth: 5}"/>
         </div>
@@ -58,17 +56,20 @@
 </template>
 
 <script>
-  Chartkick.options = {
-
-  }
+  import axios from 'axios';
+import { endpoint } from '../utils/utils';
 
   export default {
     name: 'time-series-forecast',
+    mounted() {
+      this.getDatasets();
+    },
     components: {
 
     },
     data() {
       return {
+        datasets: [],
         isLoading: false,
         graph: [
           { 
@@ -101,6 +102,11 @@
       }
     },
     methods: {
+      getDatasets() {
+        axios.get(endpoint + '/datasets')
+          .then(res => this.datasets = res.data)
+          .catch(err => console.log(err));
+      },
       makePrediction() {
         this.isLoading = true;
       },

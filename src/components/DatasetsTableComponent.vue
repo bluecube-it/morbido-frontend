@@ -2,20 +2,20 @@
   <table class="table card-table table-vcenter table-bordered table-hover">
     <thead>
       <tr>
-        <th>Filename</th>
+        <th>Original Filename</th>
+        <th>Unique Filename</th>
+        <th>Size (Mb)</th>
         <th>Columns</th>
         <th>Rows</th>
-        <th class="text-right">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="text-nowrap">weather_list.csv</td>
-        <td class="text-nowrap">12</td>
-        <td class="text-nowrap">872</td>
-        <td class="text-right">
-          <trash-icon class="cursor-pointer" />
-        </td>
+      <tr v-for="row in rows" v-bind:key="row.id">
+        <td class="text-nowrap">{{ row.original_name }}</td>
+        <td class="text-nowrap">{{ row.unique_name }}</td>
+        <td class="text-nowrap">{{ formatBytes(row.size) }}</td>
+        <td class="text-nowrap">{{ row.columns == null ? 'Not Set' : row.columns }}</td>
+        <td class="text-nowrap">{{ row.rows == null ? 'Not Set' : row.rows }}</td>
       </tr>
     </tbody>
   </table>
@@ -23,10 +23,12 @@
 
 <script>
   import { TrashIcon } from 'vue-feather-icons';
+  import axios from 'axios';
+  import { endpoint } from '../utils/utils';
 
   export default {
-    beforeMount() {
-      //this.getData();
+    mounted() {
+      this.getData();
     },
     components: {
       TrashIcon
@@ -42,9 +44,25 @@
       };
     },
     props: {
-
+      axios
     },
     methods: {
+      getData() {
+        axios.get(endpoint + '/datasets')
+          .then(res => this.rows = res.data)
+          .catch(err => console.log(err));
+      },
+      formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+      },
       // Pagination
       nextPage() {
         this.pagination.pageNumber++;

@@ -5,7 +5,7 @@
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required=""
-      autofocus="" v-model="user.email">
+      autofocus="" v-model="user.username">
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" class="form-control" placeholder="Password"
       required="" v-model="user.password">
@@ -26,8 +26,12 @@ export default {
     data() {
         return {
             user: {
-                email: '',
+                username: '',
                 password: '',
+                grant_type: 'password',
+                scope: '*',
+                client_id: '2',
+                client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9'
             },
             isError: false,
             isLoading: false,
@@ -36,7 +40,7 @@ export default {
     methods: {
         login() {
             this.isError = false;
-            axios.post(endpoint + '/login', this.user)
+            axios.post(endpoint + '/v1/oauth/token', this.user)
                 .then(res => this.process(res.data))
                 .catch(err => this.isError = true);
         },

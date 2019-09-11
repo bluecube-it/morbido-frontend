@@ -5,7 +5,7 @@
         label-idle="Drop files here..."
         v-bind:allow-multiple="true"
         accepted-file-types="text/csv"
-        server="/upload/dataset"
+        :server="url"
         v-on:init="handleFilePondInit"
     />
 </template>
@@ -23,6 +23,8 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 // Create component
 const FilePond = vueFilePond(FilePondPluginFileValidateType);
 
+import { endpoint } from '../utils/utils';
+
 export default {
     name: 'file-upload',
     methods: {
@@ -32,6 +34,12 @@ export default {
     },
     components: {
         FilePond
-    }
+    },
+    computed: {
+        url() {
+            console.log(endpoint);
+            return endpoint + '/datasets/upload';
+        },
+    },
 };
 </script>
