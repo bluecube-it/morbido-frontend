@@ -6,13 +6,19 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+import MainLayout from './layouts/MainLayout.vue';
+import AuthLayout from './layouts/AuthLayout.vue';
+
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import '../public/css/dashboard.css';
 
 Vue.use(BootstrapVue);
-Vue.use(Chartkick.use(Chart))
+Vue.use(Chartkick.use(Chart));
+
+Vue.component('main-layout', MainLayout);
+Vue.component('auth-layout', AuthLayout);
 
 Vue.config.productionTip = false;
 
