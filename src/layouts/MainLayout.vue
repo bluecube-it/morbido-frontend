@@ -6,7 +6,7 @@
         aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign out</a>
+          <a class="nav-link" style="cursor:pointer;" @click="logout">Sign out</a>
         </li>
       </ul>
     </nav>
@@ -24,8 +24,7 @@
               </li>
             </ul>
 
-            <h6
-              class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
               <span>Data Management</span>
               <a class="d-flex align-items-center text-muted" href="#"
                 aria-label="Add a new report">
@@ -37,18 +36,17 @@
                 <router-link to="/upload-datasets" class="nav-link">
                   <upload-cloud-icon></upload-cloud-icon>
                   Upload Datasets
-                </router-link> 
+                </router-link>
               </li>
               <li class="nav-item">
                 <router-link to="/time-series-forecast" class="nav-link">
                   <trending-up-icon></trending-up-icon>
                   Time Series Forecast
-                </router-link> 
+                </router-link>
               </li>
             </ul>
           </div>
         </nav>
-        
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <transition name="fade" mode="out-in">
             <slot />
@@ -60,19 +58,25 @@
 </template>
 
 <script>
-  import {
+import {
+  ActivityIcon,
+  UploadCloudIcon,
+  PlusCircleIcon,
+  TrendingUpIcon,
+} from 'vue-feather-icons';
+
+export default {
+  components: {
     ActivityIcon,
     UploadCloudIcon,
     PlusCircleIcon,
     TrendingUpIcon,
-  } from 'vue-feather-icons';
-
-  export default {
-    components: {
-      ActivityIcon,
-      UploadCloudIcon,
-      PlusCircleIcon,
-      TrendingUpIcon
-    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem('jwt');
+      this.$router.push('login')
+    },
   }
+};
 </script>
