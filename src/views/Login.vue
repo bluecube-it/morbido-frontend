@@ -49,6 +49,7 @@ export default {
 
             // Save in localstorage
             localStorage.setItem('jwt', response.access_token);
+            localStorage.setItem('jwt_refresh', response.refresh_token);
 
             if (localStorage.getItem('jwt') != null) {
                 if(this.$route.params.nextUrl != null){

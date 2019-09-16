@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import axios from 'axios';
 import Login from './views/Login.vue';
 import Dashboard from './views/Dashboard.vue';
 import UploadDatasets from './views/UploadDatasets.vue';
 import TimeSeriesForecast from './views/TimeSeriesForecast.vue';
-import { isTokenExpired } from './utils/utils';
+import { isTokenExpired, endpoint } from './utils/utils';
 
 Vue.use(Router);
 
@@ -51,7 +52,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const decoded = jwt.decode(localStorage.getItem('jwt'));
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem('jwt') == null) {
       next({
@@ -61,15 +61,31 @@ router.beforeEach((to, from, next) => {
         },
       });
     } else if (isTokenExpired(decoded) === true) {
-      localStorage.removeItem('jwt');
-      next({
-        path: '/login',
-        params: {
-          nextUrl: to.fullPath,
-        },
-      });
+      // Check if token expired and try refresh
+      axios.post(`${endpoint}/v1/oauth/token`, {
+        grant_type: 'refresh_token',
+        refresh_token: localStorage.getItem('jwt_refresh'),
+        scope: '*',
+        client_id: '2',
+        client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9',
+      })
+        .then((response) => {
+          // Save in localstorage
+          localStorage.setItem('jwt', response.data.access_token);
+          localStorage.setItem('jwt_refresh', response.data.refresh_token);
+
+          next();
+        })
+        .catch(() => {
+          localStorage.removeItem('jwt');
+          next({
+            path: '/login',
+            params: {
+              nextUrl: to.fullPath,
+            },
+          });
+        });
     } else {
-      // const user = JSON.parse(localStorage.getItem('user'));
       next();
     }
   } else if (to.matched.some(record => record.meta.guest)) {
