@@ -4,8 +4,11 @@ import Login from './views/Login.vue';
 import Dashboard from './views/Dashboard.vue';
 import UploadDatasets from './views/UploadDatasets.vue';
 import TimeSeriesForecast from './views/TimeSeriesForecast.vue';
+import { isTokenExpired } from './utils/utils';
 
 Vue.use(Router);
+
+const jwt = require('jsonwebtoken');
 
 const router = new Router({
   routes: [
@@ -47,8 +50,18 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  const decoded = jwt.decode(localStorage.getItem('jwt'));
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem('jwt') == null) {
+      next({
+        path: '/login',
+        params: {
+          nextUrl: to.fullPath,
+        },
+      });
+    } else if (isTokenExpired(decoded) === true) {
+      localStorage.removeItem('jwt');
       next({
         path: '/login',
         params: {
@@ -61,6 +74,8 @@ router.beforeEach((to, from, next) => {
     }
   } else if (to.matched.some(record => record.meta.guest)) {
     if (localStorage.getItem('jwt') == null) {
+      next();
+    } else if (isTokenExpired(decoded) === true) {
       next();
     } else {
       next({

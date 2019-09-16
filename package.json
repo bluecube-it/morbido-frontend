@@ -19,6 +19,7 @@
     "filepond": "^4.6.1",
     "filepond-plugin-file-validate-type": "^1.2.4",
     "jquery": "^3.4.1",
+    "jsonwebtoken": "^8.5.1",
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
     "vue-chartkick": "^0.5.2",
