@@ -72,6 +72,7 @@ import { endpoint } from '../utils/utils';
         datasets: [],
         isLoading: false,
         graph: [
+          /*
           { 
             name: 'Prediction',
             data: {
@@ -98,6 +99,7 @@ import { endpoint } from '../utils/utils';
               '2017-01-08': 12,
             }
           }
+          */
         ]
       }
     },
@@ -109,6 +111,13 @@ import { endpoint } from '../utils/utils';
       },
       makePrediction() {
         this.isLoading = true;
+        axios.post(endpoint + '/forecasts/sarima')
+          .then(response => {
+            console.log(response.data);
+            this.graph.push(response.data);
+            this.isLoading = false;
+          })
+          .catch(err => console.log(err));
       },
     }
   };
