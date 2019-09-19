@@ -17,7 +17,7 @@
           <div class="row">
             <div class="col-md-6 mb-6">
               <label for="state">Dataset</label>
-              <select class="custom-select d-block w-100" @change="getDatasetColumns" v-model="dataset">
+              <select class="custom-select d-block w-100" @change="getDatasetColumns" v-model="params.filename">
                 <option value="">Choose...</option>
                 <option v-for="dataset in datasets" v-bind:key="dataset.id" :value="dataset.unique_name">{{ dataset.original_name }}</option>
               </select>
@@ -138,11 +138,10 @@
         datasets: [],
         columns: [],
         isLoading: false,
-        dataset: '',
         params: {
           seasonality: 'yearly',
           precision: 'low',
-          filename: 'dataset_finale.csv',
+          filename: '',
           index: '',
           input: '',
           prediction: 1
@@ -159,7 +158,7 @@
           .catch(err => console.log(err));
       },
       getDatasetColumns() {
-        axios.post(endpoint + '/datasets/columns', { dataset: this.dataset })
+        axios.post(endpoint + '/datasets/columns', { dataset: this.params.filename })
           .then(res => this.columns = res.data.columns)
           .catch(err => console.log(err));
       },
