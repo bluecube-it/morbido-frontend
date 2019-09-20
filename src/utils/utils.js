@@ -1,6 +1,6 @@
 // Utils
 
-export const endpoint = 'http://morbido-backend.test';
+export const endpoint = 'backend';
 
 // eslint-disable-next-line consistent-return
 export const isTokenExpired = (token) => {
