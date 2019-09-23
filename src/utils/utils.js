@@ -1,6 +1,6 @@
 // Utils
 
-export const endpoint = 'http://backend';
+export const endpoint = 'http://development.morbido.backend.internal.bluecube.it';
 
 // eslint-disable-next-line consistent-return
 export const isTokenExpired = (token) => {
