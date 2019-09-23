@@ -40,7 +40,7 @@ export default {
     methods: {
         login() {
             this.isError = false;
-            axios.post(endpoint + '/auth/token', this.user)
+            axios.post(endpoint + '/v1/oauth/token', this.user)
                 .then(res => this.process(res.data))
                 .catch(err => this.isError = true);
         },
