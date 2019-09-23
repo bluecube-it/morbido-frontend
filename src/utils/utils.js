@@ -1,6 +1,6 @@
 // Utils
 
-export const endpoint = 'backend';
+export const endpoint = 'http://backend';
 
 // eslint-disable-next-line consistent-return
 export const isTokenExpired = (token) => {
