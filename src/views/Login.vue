@@ -30,8 +30,8 @@ export default {
                 password: '',
                 grant_type: 'password',
                 scope: '*',
-                client_id: '2',
-                client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9'
+                client_id: '1',
+                // client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9'
             },
             isError: false,
             isLoading: false,
