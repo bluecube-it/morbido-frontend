@@ -66,8 +66,8 @@ router.beforeEach((to, from, next) => {
         grant_type: 'refresh_token',
         refresh_token: localStorage.getItem('jwt_refresh'),
         scope: '*',
-        client_id: '2',
-        client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9',
+        client_id: '1',
+        // client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9',
       })
         .then((response) => {
           // Save in localstorage
