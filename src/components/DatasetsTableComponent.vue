@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th>Original Filename</th>
-        <th>Unique Filename</th>
+        <th class="truncate">Unique Filename</th>
         <th>Size (Mb)</th>
         <th>Columns</th>
         <th>Rows</th>
@@ -12,7 +12,7 @@
     <tbody>
       <tr v-for="row in rows" v-bind:key="row.id">
         <td class="text-nowrap">{{ row.original_name }}</td>
-        <td class="text-nowrap">{{ row.unique_name }}</td>
+        <td class="text-nowrap truncate" :title="row.unique_name">{{ row.unique_name }}</td>
         <td class="text-nowrap">{{ formatBytes(row.size) }}</td>
         <td class="text-nowrap">{{ row.columns == null ? 'Not Set' : row.columns }}</td>
         <td class="text-nowrap">{{ row.rows == null ? 'Not Set' : row.rows }}</td>
@@ -83,4 +83,10 @@ export default {
   .cursor-pointer {
     cursor: pointer;
   }
+  .truncate {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>

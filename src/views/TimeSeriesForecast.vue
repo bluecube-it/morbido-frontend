@@ -10,16 +10,16 @@
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-muted">Instructions</span>
         </h4>
-        <p>To start a forecast you need to pick a dataset, from the ones previously uploaded, on which you want to make the prediction.</p>
-        <p>Then you have to select a column, with datetime format, to use as index, and another containing the data you want to predict on.</p>
-        <p>To date the available time periods are monthly and annual.</p>
+        <p>To start a forecast you first need to choose one of the previously uploaded datasets.</p>
+        <p>Then, in the &quot;Time value&quot; box you must select an option that represents a date &frasl; time format, while in the &quot;Value to be foreseen&quot; box you can select whichever option you&rsquo;re interested in making the prediction about.</p>
+        <p>To date, the predictable time periods are monthly and annual.</p>
         <p>The predicted value is the mean on selected period.</p>
         <h6>Suggestions</h6>
         <div class="link-list-wrapper">
           <ul class="link-list">
-            <li>Selecting high precision for datasets containing more than 100 lines reduces the time needed for the forecast.</li>
-            <li>To avoid divergent predictions it's better to not forecast a period longer than 1/3 of you dataset time span; e.g. if you have datas from 10 years, only forecast 3 or less years.</li>
-            <li>It is not recommended to predict a single month.</li>
+            <li>Selecting a high precision for datasets containing more than 100 lines reduces the time required  for the forecast.</li>
+            <li>To avoid divergent predictions it's better not to forecast a period longer than one third of you dataset's time span. For example, if your time span is 10 years, just forecast 3 (or less) years.</li>
+            <li>It is not recommended to predict single months.</li>
           </ul>
         </div>
       </div>
