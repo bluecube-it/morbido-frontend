@@ -22,45 +22,44 @@ import axios from 'axios';
 import { endpoint } from '../utils/utils';
 
 export default {
-    data() {
-        return {
-            user: {
-                username: '',
-                password: '',
-                grant_type: 'password',
-                scope: '*',
-                client_id: '1',
-                // client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9'
-            },
-            isError: false,
-            isLoading: false,
-        }
+  data() {
+    return {
+      user: {
+        username: '',
+        password: '',
+        grant_type: 'password',
+        scope: '*',
+        client_id: '1',
+        // client_secret: 'v7t2xvmmwMJkOjWRL3KT9QXqh9PnDwamSiEVf3i9'
+      },
+      isError: false,
+      isLoading: false,
+    };
+  },
+  methods: {
+    login() {
+      this.isError = false;
+      axios.post(`${endpoint}/v1/oauth/token`, this.user)
+        .then(res => this.process(res.data))
+        .catch(err => this.isError = true);
     },
-    methods: {
-        login() {
-            this.isError = false;
-            axios.post(endpoint + '/v1/oauth/token', this.user)
-                .then(res => this.process(res.data))
-                .catch(err => this.isError = true);
-        },
-        process(response) {
-            this.isLoading = true;
+    process(response) {
+      this.isLoading = true;
 
-            // Save in localstorage
-            localStorage.setItem('jwt', response.access_token);
-            localStorage.setItem('jwt_refresh', response.refresh_token);
+      // Save in localstorage
+      localStorage.setItem('jwt', response.access_token);
+      localStorage.setItem('jwt_refresh', response.refresh_token);
 
-            if (localStorage.getItem('jwt') != null) {
-                if(this.$route.params.nextUrl != null){
-                    this.$router.push(this.$route.params.nextUrl)
-                }
-                else {
-                    this.$router.push('dashboard')
-                }
-            }
+      if (localStorage.getItem('jwt') != null) {
+        if (this.$route.params.nextUrl != null) {
+          this.$router.push(this.$route.params.nextUrl);
+        } else {
+          this.$router.push('dashboard');
         }
-    }
-}
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
