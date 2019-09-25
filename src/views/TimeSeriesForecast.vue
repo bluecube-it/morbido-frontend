@@ -48,7 +48,11 @@
               <label for="state">Time value</label>
               <select class="custom-select d-block w-100" v-model="params.index">
                 <option value="">Choose...</option>
-                <option v-for="column in columns" v-bind:key="column" :value="column">{{ column }}</option>
+                <option
+                  v-for="column in columns"
+                  v-bind:key="column"
+                  :value="column"
+                >{{ column }}</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -58,7 +62,11 @@
               <label for="state">Value to be foreseen</label>
               <select class="custom-select d-block w-100" v-model="params.input">
                 <option value="">Choose...</option>
-                <option v-for="column in columns" v-bind:key="column" :value="column">{{ column }}</option>
+                <option
+                  v-for="column in columns"
+                  v-bind:key="column"
+                  :value="column"
+                >{{ column }}</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -154,12 +162,16 @@ export default {
   methods: {
     getDatasets() {
       axios.get(`${endpoint}/datasets`)
-        .then(res => this.datasets = res.data)
+        .then((res) => {
+          this.datasets = res.data;
+        })
         .catch(err => console.log(err));
     },
     getDatasetColumns() {
       axios.post(`${endpoint}/datasets/columns`, { dataset: this.params.filename })
-        .then(res => this.columns = res.data.columns)
+        .then((res) => {
+          this.columns = res.data.columns;
+        })
         .catch(err => console.log(err));
     },
     makePrediction() {
