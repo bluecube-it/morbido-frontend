@@ -22,15 +22,15 @@
 </template>
 
 <script>
-  import DatasetsTableComponent from '../components/DatasetsTableComponent';
-  import FileUpload from '../components/FileUpload';
+import DatasetsTableComponent from '../components/DatasetsTableComponent.vue';
+import FileUpload from '../components/FileUpload.vue';
 
-  export default {
-    name: 'upload-datasets',
-    components: {
-      DatasetsTableComponent,
-      FileUpload
-    },
-  };
+export default {
+  name: 'upload-datasets',
+  components: {
+    DatasetsTableComponent,
+    FileUpload,
+  },
+};
 
 </script>

@@ -25,7 +25,7 @@
                 Please provide a valid state.
               </div>
             </div>
-            <!-- 
+            <!--
             <div class="col-md-3 mb-3">
               <label for="lastName">Predict From</label>
               <input type="date" class="form-control" id="zip" placeholder="" required="">
@@ -48,7 +48,11 @@
               <label for="state">Time value</label>
               <select class="custom-select d-block w-100" v-model="params.index">
                 <option value="">Choose...</option>
-                <option v-for="column in columns" v-bind:key="column" :value="column">{{ column }}</option>
+                <option
+                  v-for="column in columns"
+                  v-bind:key="column"
+                  :value="column"
+                >{{ column }}</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -58,7 +62,11 @@
               <label for="state">Value to be foreseen</label>
               <select class="custom-select d-block w-100" v-model="params.input">
                 <option value="">Choose...</option>
-                <option v-for="column in columns" v-bind:key="column" :value="column">{{ column }}</option>
+                <option
+                  v-for="column in columns"
+                  v-bind:key="column"
+                  :value="column"
+                >{{ column }}</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -122,57 +130,61 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import { endpoint } from '../utils/utils';
+import axios from 'axios';
+import { endpoint } from '../utils/utils';
 
-  export default {
-    name: 'time-series-forecast',
-    mounted() {
-      this.getDatasets();
-    },
-    components: {
+export default {
+  name: 'time-series-forecast',
+  mounted() {
+    this.getDatasets();
+  },
+  components: {
 
-    },
-    data() {
-      return {
-        datasets: [],
-        columns: [],
-        isLoading: false,
-        params: {
-          seasonality: 'yearly',
-          precision: 'low',
-          filename: '',
-          index: '',
-          input: '',
-          prediction: 1
-        },
-        graph: [
+  },
+  data() {
+    return {
+      datasets: [],
+      columns: [],
+      isLoading: false,
+      params: {
+        seasonality: 'yearly',
+        precision: 'low',
+        filename: '',
+        index: '',
+        input: '',
+        prediction: 1,
+      },
+      graph: [
 
-        ]
-      }
+      ],
+    };
+  },
+  methods: {
+    getDatasets() {
+      axios.get(`${endpoint}/datasets`)
+        .then((res) => {
+          this.datasets = res.data;
+        })
+        .catch(err => console.log(err));
     },
-    methods: {
-      getDatasets() {
-        axios.get(endpoint + '/datasets')
-          .then(res => this.datasets = res.data)
-          .catch(err => console.log(err));
-      },
-      getDatasetColumns() {
-        axios.post(endpoint + '/datasets/columns', { dataset: this.params.filename })
-          .then(res => this.columns = res.data.columns)
-          .catch(err => console.log(err));
-      },
-      makePrediction() {
-        this.isLoading = true;
-        axios.post(endpoint + '/forecasts/sarima', this.params)
-          .then(response => {
-            this.graph = [];
-            this.graph.push(response.data);
-            this.isLoading = false;
-          })
-          .catch(err => console.log(err));
-      },
-    }
-  };
+    getDatasetColumns() {
+      axios.post(`${endpoint}/datasets/columns`, { dataset: this.params.filename })
+        .then((res) => {
+          this.columns = res.data.columns;
+        })
+        .catch(err => console.log(err));
+    },
+    makePrediction() {
+      this.isLoading = true;
+      axios.post(`${endpoint}/forecasts/sarima`, this.params)
+        .then((response) => {
+          this.graph = [];
+          this.graph.push(response.data);
+          this.isLoading = false;
+        })
+        .catch(err => console.log(err));
+    },
+  },
+};
 
 </script>

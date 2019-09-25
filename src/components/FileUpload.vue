@@ -20,26 +20,25 @@ import 'filepond/dist/filepond.min.css';
 // Import image preview and file type validation plugins
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 
+import { endpoint } from '../utils/utils';
+
 // Create component
 const FilePond = vueFilePond(FilePondPluginFileValidateType);
 
-import { endpoint } from '../utils/utils';
-
 export default {
-    name: 'file-upload',
-    methods: {
-        handleFilePondInit: function() {
-            // FilePond instance methods are available on `this.$refs.pond`
-        }
+  name: 'file-upload',
+  methods: {
+    handleFilePondInit() {
+      // FilePond instance methods are available on `this.$refs.pond`
     },
-    components: {
-        FilePond
+  },
+  components: {
+    FilePond,
+  },
+  computed: {
+    url() {
+      return `${endpoint}/datasets/upload`;
     },
-    computed: {
-        url() {
-            console.log(endpoint);
-            return endpoint + '/datasets/upload';
-        },
-    },
+  },
 };
 </script>
