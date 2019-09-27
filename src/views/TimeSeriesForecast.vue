@@ -98,9 +98,9 @@
             </div>
             <div class="col-md-4 mb-4">
               <label for="state">Unit Time</label>
-              <select class="custom-select d-block w-100" v-model="params.seasonality">
-                <option value="yearly">Yearly</option>
-                <option value="montly">Montly</option>
+              <select class="custom-select d-block w-100" v-model="params.seasonality" @change="setHMOptions">
+                <option value="yearly" selected>Yearly</option>
+                <option value="monthly">Monthly</option>
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -109,7 +109,8 @@
             <div class="col-md-4 mb-4">
               <label for="state">How Many?</label>
               <select class="custom-select d-block w-100" v-model="params.prediction">
-                <option value="1">1</option>
+                  <option v-for="option in how_many_options" v-bind:value="option.id" :key="option.id" v-text="option.text"></option>
+                <!-- <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
@@ -120,7 +121,7 @@
                 <option value="9">9</option>
                 <option value="10">10</option>
                 <option value="11">11</option>
-                <option value="12">12</option>
+                <option value="12">12</option> -->
               </select>
               <div class="invalid-feedback">
                 Please provide a valid state.
@@ -149,6 +150,7 @@ export default {
   name: 'time-series-forecast',
   mounted() {
     this.getDatasets();
+    this.setHMOptions(); // init with default values (yearly)
   },
   components: {
 
@@ -157,6 +159,7 @@ export default {
     return {
       datasets: [],
       columns: [],
+      how_many_options: [],
       isLoading: false,
       params: {
         seasonality: 'yearly',
@@ -172,6 +175,28 @@ export default {
     };
   },
   methods: {
+    setHMOptions(event) {
+        let c = 0;
+        this.how_many_options = []; // reset the select's options
+        if(event) { // on change was triggered
+            if(event.target.value == 'monthly') {
+                c = 12;
+            } else {
+                c = 3;
+            }
+        }
+        else {
+            // just init with default values (yearly)
+            c = 3;
+        }
+        // set options
+        for (let i=1; i<=c; i++) {
+            this.how_many_options.push(
+                { text: `${i}`, id:  `${i}`},
+            );
+                
+        }
+    },
     getDatasets() {
       axios.get(`${endpoint}/datasets`)
         .then((res) => {
