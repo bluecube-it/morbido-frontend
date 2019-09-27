@@ -188,13 +188,20 @@ export default {
     },
     makePrediction() {
       this.isLoading = true;
+      var that = this;
       axios.post(`${endpoint}/forecasts/sarima`, this.params)
         .then((response) => {
           this.graph = [];
           this.graph.push(response.data);
           this.isLoading = false;
         })
-        .catch(err => console.log(err));
+        .catch(
+          function (err) {
+            console.log(err);
+            that.isLoading = false;
+            alert('Something went wrong while sending your request :(');
+          },
+        );
     },
   },
 };
