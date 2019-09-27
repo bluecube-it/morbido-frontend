@@ -171,7 +171,7 @@ export default {
       axios.post(`${endpoint}/datasets/columns`, { dataset: this.params.filename })
         .then((res) => {
           this.columns = res.data.columns;
-          res.data.dataset.name = 'Dataset'
+          //res.data.dataset.name = 'Dataset'
           this.graph.push(res.data.dataset)
         })
         .catch(err => console.log(err));
