@@ -183,7 +183,10 @@ export default {
                     this.graph.push(response.data);
                     this.isLoading = false;
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    this.isLoading = false;
+                    alert('Something went wrong with the request..')
+                });
         }
     },
 };
