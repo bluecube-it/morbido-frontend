@@ -218,8 +218,7 @@ export default {
       axios
         .post(`${endpoint}/forecasts/sarima`, this.params)
         .then((response) => {
-          this.graph = [];
-          this.graph.push(response.data);
+          this.graph = response.data;
           this.isLoading = false;
         })
         .catch(() => {
