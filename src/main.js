@@ -2,6 +2,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import Chartkick from 'vue-chartkick';
 import Chart from 'chart.js';
+import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -19,6 +20,8 @@ Vue.use(Chartkick.use(Chart));
 
 Vue.component('main-layout', MainLayout);
 Vue.component('auth-layout', AuthLayout);
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 Vue.config.productionTip = false;
 

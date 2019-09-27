@@ -13,7 +13,7 @@
       <tr v-for="row in rows" v-bind:key="row.id">
         <td class="text-nowrap">{{ row.original_name }}</td>
         <td class="text-nowrap truncate" :title="row.unique_name">{{ row.unique_name }}</td>
-        <td class="text-nowrap">{{ formatBytes(row.size) }}</td>
+        <td class="text-nowrap">{{formatBytes(row.size)}}</td>
         <td class="text-nowrap">{{ row.columns == null ? 'Not Set' : row.columns }}</td>
         <td class="text-nowrap">{{ row.rows == null ? 'Not Set' : row.rows }}</td>
       </tr>
@@ -22,16 +22,12 @@
 </template>
 
 <script>
-import { TrashIcon } from 'vue-feather-icons';
 import axios from 'axios';
-import { endpoint } from '../utils/utils';
+import { endpoint } from '../utils/utils';
 
 export default {
   mounted() {
     this.getData();
-  },
-  components: {
-    TrashIcon,
   },
   data() {
     return {
@@ -49,8 +45,10 @@ export default {
   methods: {
     getData() {
       axios.get(`${endpoint}/datasets`)
-        .then(res => this.rows = res.data)
-        .catch(err => console.log(err));
+        .then((res) => {
+          this.rows = res.data;
+        });
+      // .catch(err => console.log(err));
     },
     formatBytes(bytes, decimals = 2) {
       if (bytes === 0) return '0 Bytes';
@@ -61,14 +59,14 @@ export default {
 
       const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-      return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+      return `${parseFloat((bytes / (k ** i)).toFixed(dm))} ${sizes[i]}`;
     },
     // Pagination
     nextPage() {
-      this.pagination.pageNumber++;
+      this.pagination.pageNumber += 1;
     },
     prevPage() {
-      this.pagination.pageNumber--;
+      this.pagination.pageNumber -= 1;
     },
     // Filtering
     deleteFilters() {
