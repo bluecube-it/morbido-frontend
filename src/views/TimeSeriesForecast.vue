@@ -25,175 +25,68 @@
             </div>
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Configuration</h4>
-                <ValidationObserver ref="observer" v-slot="{ passes }">
-                    <form class="needs-validation" @submit.prevent="passes(makePrediction)">
-                        <div class="row">
-                            <div class="col-md-6 mb-6">
+                <ValidationObserver ref="observer" v-slot="{ invalid }" tag="form" @submit.prevent="makePrediction">
+                    <div class="row">
+                        <div class="col-md-6 mb-6">
+                            <validation-provider rules="required" v-slot="{ validated, invalid }">
                                 <label for="state">Dataset</label>
-                                <validation-provider
-                                    name="Dataset"
-                                    mode="passive"
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                >
-                                    <select
-                                        class="custom-select d-block w-100"
-                                        @change="getDatasetColumns"
-                                        v-model="params.filename"
-                                    >
-                                        <option value>Choose...</option>
-                                        <option
-                                            v-for="dataset in datasets"
-                                            v-bind:key="dataset.id"
-                                            :value="dataset.unique_name"
-                                        >{{ dataset.original_name }}</option>
-                                    </select>
-
-                                    <span>{{ errors[0] }}</span>
-                                </validation-provider>
-                                <div class="invalid-feedback">Please provide a valid state.</div>
-                            </div>
-                            <!--
-            <div class="col-md-3 mb-3">
-              <label for="lastName">Predict From</label>
-              <input type="date" class="form-control" id="zip" placeholder="" required="">
-              <div class="invalid-feedback">
-                This field is required
-              </div>
-            </div>
-            <div class="col-md-3 mb-3">
-              <label for="lastName">Predict To</label>
-              <input type="date" class="form-control" id="zip" placeholder="" required="">
-              <div class="invalid-feedback">
-                This field is required
-              </div>
-            </div>
-                            -->
+                                <select class="custom-select d-block w-100" v-bind:class="{ 'is-invalid': validated && invalid }" @change="getDatasetColumns" v-model="params.filename">
+                                    <option value>Choose...</option>
+                                    <option v-for="dataset in datasets" v-bind:key="dataset.id" :value="dataset.unique_name">{{ dataset.original_name }}</option>
+                                </select>
+                                <div v-if="validated && invalid" class="invalid-feedback">Mandatory Field</div>
+                            </validation-provider>
                         </div>
-                        <hr class="mb-4" />
-                        <div class="row mb-4">
-                            <div class="col-md-6 mb-6">
+                    </div>
+                    <hr class="mb-4" />
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-6">
+                            <validation-provider rules="required" v-slot="{ validated, invalid }">
                                 <label for="state">Time value</label>
-                                <validation-provider
-                                    name="Time"
-                                    mode="passive"
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                >
-                                    <select
-                                        class="custom-select d-block w-100"
-                                        v-model="params.index"
-                                    >
-                                        <option value>Choose...</option>
-                                        <option
-                                            v-for="column in columns"
-                                            v-bind:key="column"
-                                            :value="column"
-                                        >{{ column }}</option>
-                                    </select>
-
-                                    <span class="errors">{{ errors[0] }}</span>
-                                </validation-provider>
-                                <div class="invalid-feedback">Please provide a valid state.</div>
-                            </div>
-                            <div class="col-md-6 mb-6">
-                                <label for="state">Value to be foreseen</label>
-                                <validation-provider
-                                    name="Foreseen"
-                                    mode="passive"
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                >
-                                    <select
-                                        class="custom-select d-block w-100"
-                                        v-model="params.input"
-                                    >
-                                        <option value>Choose...</option>
-                                        <option
-                                            v-for="column in columns"
-                                            v-bind:key="column"
-                                            :value="column"
-                                        >{{ column }}</option>
-                                    </select>
-
-                                    <span>{{ errors[0] }}</span>
-                                </validation-provider>
-                                <div class="invalid-feedback">Please provide a valid state.</div>
-                            </div>
+                                <select class="custom-select d-block w-100" v-bind:class="{ 'is-invalid': validated && invalid }" v-model="params.index">
+                                    <option value>Choose...</option>
+                                    <option v-for="column in columns" v-bind:key="column" :value="column">{{ column }}</option>
+                                </select>
+                                <div v-if="validated && invalid" class="invalid-feedback">Mandatory Field</div>
+                            </validation-provider>
                         </div>
-                        <div class="row mb-4">
-                            <div class="col-md-4 mb-4">
-                                <label for="state">Precision</label>
-                                <validation-provider
-                                    name="Precision"
-                                    mode="passive"
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                >
-                                    <select
-                                        class="custom-select d-block w-100"
-                                        v-model="params.precision"
-                                    >
-                                        <option value="low">Low</option>
-                                        <option value="high">High</option>
-                                    </select>
-
-                                    <span>{{ errors[0] }}</span>
-                                </validation-provider>
-                                <div class="invalid-feedback">Please provide a valid state.</div>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <label for="state">Unit Time</label>
-                                <validation-provider
-                                    name="Unit Time"
-                                    mode="passive"
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                >
-                                    <select
-                                        class="custom-select d-block w-100"
-                                        v-model="params.seasonality"
-                                        @change="setHMOptions"
-                                    >
-                                        <option value="yearly" selected>Yearly</option>
-                                        <option value="monthly">Monthly</option>
-                                    </select>
-
-                                    <span>{{ errors[0] }}</span>
-                                </validation-provider>
-                                <div class="invalid-feedback">Please provide a valid state.</div>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <label for="state">How Many?</label>
-                                <validation-provider
-                                    name="How Many"
-                                    mode="passive"
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                >
-                                    <select
-                                        class="custom-select d-block w-100"
-                                        v-model="params.prediction"
-                                    >
-                                        <option
-                                            v-for="option in how_many_options"
-                                            v-bind:value="option.id"
-                                            :key="option.id"
-                                            v-text="option.text"
-                                        ></option>
-                                    </select>
-
-                                    <span>{{ errors[0] }}</span>
-                                </validation-provider>
-                                <div class="invalid-feedback">Please provide a valid state.</div>
-                            </div>
+                        <div class="col-md-6 mb-6">
+                            <validation-provider rules="required" v-slot="{ validated, invalid }">
+                                <label for="state">Time value</label>
+                                <select class="custom-select d-block w-100" v-bind:class="{ 'is-invalid': validated && invalid }" v-model="params.input">
+                                    <option value>Choose...</option>
+                                    <option v-for="column in columns" v-bind:key="column" :value="column">{{ column }}</option>
+                                </select>
+                                <div v-if="validated && invalid" class="invalid-feedback">Mandatory Field</div>
+                            </validation-provider>
                         </div>
-                        <!-- <b-button variant="dark" block @click="makePrediction"> -->
-                        <b-button variant="dark" block type="submit">
-                            <b-spinner small v-if="isLoading"></b-spinner>
-                            <span v-if="!isLoading">Predict Time Series</span>
-                        </b-button>
-                    </form>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-4">
+                            <label for="state">Precision</label>
+                            <select class="custom-select d-block w-100" v-model="params.precision">
+                                <option value="low">Low</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label for="state">Unit Time</label>
+                            <select class="custom-select d-block w-100" v-model="params.seasonality" @change="setHMOptions">
+                                <option value="yearly" selected>Yearly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <label for="state">How Many?</label>
+                            <select class="custom-select d-block w-100" v-model="params.prediction">
+                                <option v-for="option in how_many_options" v-bind:value="option.id" :key="option.id" v-text="option.text"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <b-button variant="dark" block type="submit" :disabled="invalid">
+                        <b-spinner small v-if="isLoading"></b-spinner>
+                        <span v-if="!isLoading">Predict Time Series</span>
+                    </b-button>
                 </ValidationObserver>
                 <div class="mt-5" v-if="this.graph.length > 0">
                     <line-chart :data="graph" height="500px" :dataset="{borderWidth: 5}" />
@@ -205,16 +98,7 @@
 
 <script>
 import axios from 'axios';
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
 import { endpoint } from '../utils/utils';
-
-
-
-extend('required', {
-    ...required,
-    message: `The {_field_}  field is required`
-});
 
 export default {
     name: 'time-series-forecast',
@@ -225,8 +109,7 @@ export default {
         this.setHMOptions(); // init with default values (yearly)
     },
     components: {
-        ValidationProvider,
-        ValidationObserver
+        
     },
     data() {
         return {
@@ -284,7 +167,14 @@ export default {
                 })
                 .catch(err => console.log(err));
         },
-        makePrediction() {
+        async makePrediction() {
+            
+            const isValid = await this.$refs.observer.validate();
+
+            if (!isValid) {
+                return false;
+            }
+
             this.isLoading = true;
             axios
                 .post(`${endpoint}/forecasts/sarima`, this.params)
