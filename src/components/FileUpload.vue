@@ -4,7 +4,7 @@
         ref="pond"
         label-idle="Drop files here..."
         v-bind:allow-multiple="true"
-        accepted-file-types="text/csv"
+        :accepted-file-types="acceptedFileTypes"
         :server="url"
         v-on:init="handleFilePondInit"
     />
@@ -27,6 +27,11 @@ const FilePond = vueFilePond(FilePondPluginFileValidateType);
 
 export default {
   name: 'file-upload',
+  data() {
+    return {
+      acceptedFileTypes: ['text/csv', 'application/vnd.ms-excel']
+    }
+  },
   methods: {
     handleFilePondInit() {
       // FilePond instance methods are available on `this.$refs.pond`
