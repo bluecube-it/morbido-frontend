@@ -3,7 +3,6 @@
     <thead>
       <tr>
         <th>Original Filename</th>
-        <th>Unique Filename</th>
         <th>Size (Mb)</th>
         <th>Columns</th>
         <th>Rows</th>
@@ -12,7 +11,6 @@
     <tbody>
       <tr v-for="row in rows" v-bind:key="row.id">
         <td class="text-nowrap">{{ row.original_name }}</td>
-        <td class="text-nowrap">{{ row.unique_name }}</td>
         <td class="text-nowrap">{{ formatBytes(row.size) }}</td>
         <td class="text-nowrap">{{ row.columns == null ? 'Not Set' : row.columns }}</td>
         <td class="text-nowrap">{{ row.rows == null ? 'Not Set' : row.rows }}</td>
