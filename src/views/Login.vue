@@ -19,7 +19,7 @@
 
 <script>
 import axios from 'axios';
-import { endpoint } from '../utils/utils';
+import { endpoint } from '../utils/utils';
 
 export default {
   data() {
@@ -41,7 +41,9 @@ export default {
       this.isError = false;
       axios.post(`${endpoint}/v1/oauth/token`, this.user)
         .then(res => this.process(res.data))
-        .catch(err => this.isError = true);
+        .catch(() => {
+          this.isError = true;
+        });
     },
     process(response) {
       this.isLoading = true;

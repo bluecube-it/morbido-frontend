@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="py-5">
       <h2>Upload Datasets</h2>
-      <p class="lead">In this page you can upload your dataset, currently the system accept only CSV files.</p>
+      <p class="lead">In this page you can upload your dataset, currently
+      the system accepts only CSV files (with first line as header).</p>
     </div>
 
     <div class="row mb-5">

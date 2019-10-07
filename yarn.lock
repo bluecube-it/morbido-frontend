@@ -8869,6 +8869,11 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vee-validate@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-3.0.7.tgz#72ee2de97da2cb775a173f98c6ab516c1dc1b57c"
+  integrity sha512-azEJeFTV/9AOjzSl1NuZgB70bMSatkUEnyZPrx2eUiqhcvqbG1kbZ3yIoH5sfICePWaiYnksVwTSi01IdDhXVw==
+
 vendors@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.3.tgz#a6467781abd366217c050f8202e7e50cc9eef8c0"
@@ -9397,6 +9402,11 @@ yargs@^13.0.0:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.1"
+
+yarn@^1.17.3:
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.17.3.tgz#60e0b77d079eb78e753bb616f7592b51b6a9adce"
+  integrity sha512-CgA8o7nRZaQvmeF/WBx2FC7f9W/0X59T2IaLYqgMo6637wfp5mMEsM3YXoJtKUspnpmDJKl/gGFhnqS+sON7hA==
 
 yorkie@^2.0.0:
   version "2.0.0"
