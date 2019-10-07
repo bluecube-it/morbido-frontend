@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueSnackbar from 'vue-snack';
 import BootstrapVue from 'bootstrap-vue';
 import Chartkick from 'vue-chartkick';
 import Chart from 'chart.js';
@@ -13,10 +14,12 @@ import AuthLayout from './layouts/AuthLayout.vue';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import 'vue-snack/dist/vue-snack.min.css';
 import '../public/css/dashboard.css';
 
 Vue.use(BootstrapVue);
 Vue.use(Chartkick.use(Chart));
+Vue.use(VueSnackbar);
 
 Vue.component('main-layout', MainLayout);
 Vue.component('auth-layout', AuthLayout);
