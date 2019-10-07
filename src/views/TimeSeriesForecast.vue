@@ -110,6 +110,7 @@
                                 @change="setHMOptions">
                                     <option value="yearly" selected>Yearly</option>
                                     <option value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
                             </select>
                         </div>
                         <div class="col-md-4 mb-4">
@@ -174,7 +175,7 @@ export default {
       this.how_many_options = []; // reset the select's options
       if (event) {
         // on change was triggered
-        if (event.target.value === 'monthly') {
+        if (event.target.value === 'monthly' || event.target.value === 'quarterly') {
           c = 12;
         } else {
           c = 3;
@@ -211,6 +212,7 @@ export default {
       const isValid = await this.$refs.observer.validate();
 
       if (!isValid) {
+        this.$snack.danger('Make sure to enter all required data');
         return false;
       }
 
@@ -223,6 +225,10 @@ export default {
         })
         .catch(() => {
           this.isLoading = false;
+          this.$snack.danger({
+            text: 'Something went wrong :(',
+            button: 'OK',
+          });
         });
 
       return true;
