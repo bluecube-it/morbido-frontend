@@ -1,7 +1,6 @@
 <template>
   <form class="form-signin">
-    <img class="mb-4 logo-image" src="/images/morbido-logo.png" alt="Morbido Logo">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <img class="mb-5 logo-image" src="/images/morbido-logo.png" alt="Morbido Logo">
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required=""
       autofocus="" v-model="user.username">
