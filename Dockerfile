@@ -10,15 +10,15 @@ RUN apk add --no-cache git
 
 WORKDIR /
 
-RUN git clone http://gitlab.internal.bluecube.it/Renny/morbido-frontend.git
+RUN git clone https://github.com/bluecube-it/morbido-frontend.git
 
 WORKDIR /morbido-frontend
 
 # install project dependencies
-RUN npm install
+RUN yarn install
 
 # build app for production with minification
-RUN npm run build
+RUN yarn build
 
 EXPOSE 8080
 CMD [ "http-server", "-p", "8080", "dist" ]
